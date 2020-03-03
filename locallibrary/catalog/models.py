@@ -7,6 +7,16 @@ from django.contrib.auth.models import User
 import uuid # Required for unique book instances
 
 # Create your models here.
+class Language(models.Model):
+    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
+    name = models.CharField(max_length=200,
+                            help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)")
+        
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)"""
+        return self.name
+
+
 class Genre(models.Model):
     """Model representing a book genre."""
     name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
@@ -29,6 +39,8 @@ class Book(models.Model):
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         """String for representing the Model object."""
@@ -88,7 +100,7 @@ class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Died', null=True, blank=True)
+    date_of_death = models.DateField('died', null=True, blank=True)
 
     class Meta:
         ordering = ['first_name', 'last_name']
@@ -101,12 +113,3 @@ class Author(models.Model):
         """String for representing the Model object."""
         return f'{self.first_name} {self.last_name}'
 
-
-class Language(models.Model):
-    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
-    name = models.CharField(max_length=200,
-                            help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)")
-        
-    def __str__(self):
-        """String for representing the Model object (in Admin site etc.)"""
-        return self.name
