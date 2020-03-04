@@ -8,6 +8,7 @@
 *.pyc
 __pycache__/
 local_settings.py
+*.sqlite3
 db.sqlite3
 db.sqlite3-journal
 media
@@ -181,5 +182,8 @@ dmypy.json
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+# Text backup files
+*.bak
 
 # End of https://www.gitignore.io/api/python,django,visualstudiocode
